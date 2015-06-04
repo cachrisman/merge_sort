@@ -1,54 +1,38 @@
-def sort(arr)
-  if arr.length === 0
-    return []
-  end
-end
-
-
-def merge(lf, rt)
-  l_index = 0
-  r_index = 0
-  index = 0
-  result = Array.new(lf.length + rt.length) 
-
-  remaining = nil
-  rem_index = nil
-
-  while l_index < lf.length && r_index < rt.length
-    l_val = lf[l_index]
-    r_val = rt[r_index]
-
-    if l_val < r_val
-      result[index] = l_val
-      l_index = l_index + 1
-    else
-      result[index] = r_val
-      r_index = r_index + 1
-    end
-
-    index = index + 1
-  end
-  
-  if l_index < lf.length
-    remaining = lf
-    rem_index = l_index
+def sort(array)
+  array = array.clone
+  if array.length <= 1
+    return array
   else
-    remaining = rt
-    rem_index = r_index
+    mid = array.length/2
+    merge(mergeSort(array.slice(0,mid)), mergeSort(array.slice(mid,array.length)))
   end
-
-  while (rem_index < remaining.length)
-    result[index] = remaining[rem_index]
-    rem_index = rem_index + 1
-    index = index + 1 
-  end
-
-  return result
 end
 
 
-
-
-
-
-
+def merge(left, right)
+  left_index = 0
+  right_index = 0
+  index = 0
+  output = []
+  while left_index < left.length and right_index < right.length do
+    if right[right_index] < left[left_index]
+      output[index] = right[right_index]
+      right_index += 1
+    else
+      output[index] = left[left_index]
+      left_index += 1
+    end
+    index += 1
+  end
+  while left_index < left.length do
+    output[index] = left[left_index]
+    left_index += 1
+    index += 1
+  end
+  while right_index < right.length do
+    output[index] = right[right_index]
+    right_index += 1
+    index += 1
+  end
+  output
+end
